@@ -1,0 +1,71 @@
+type: picture-elements
+elements:
+  - type: state-label
+    entity: device_tracker.<YOUR_CAR_HERE>
+    prefix: 'Position: '
+    style:
+      color: '#8df427'
+      font-size: 18px
+      left: 94%
+      top: 10%
+      transform: translate(-100%,-50%)
+  - type: state-label
+    entity: sensor.bilen_odometer
+    style:
+      color: '#8df427'
+      font-size: 18px
+      left: 34%
+      top: 10%
+      transform: translate(-100%,-50%)
+  - type: state-label
+    entity: sensor.bilen_combustion_range
+    prefix: 'Räckvidd: '
+    style:
+      color: '#8df427'
+      font-size: 18px
+      left: 94%
+      top: 92%
+      transform: translate(-100%,-50%)
+  - type: image
+    entity: lock.bilen_door_locked
+    image: /local/door_locked.png
+    state_image:
+      locked: /local/door_locked.png
+      unlocked: /local/door_unlocked.png
+    style:
+      top: 10%
+      left: 6%
+      width: 8%
+      image-rendering: crisp
+  - type: image
+    entity: switch.bilen_parking_heater_heating
+    image: /local/heater_on.png
+    state_image:
+      'on': /local/heater_off.png
+      'off': /local/heater_on.png
+    style:
+      top: 87%
+      left: 6%
+      width: 8%
+      image-rendering: crisp
+    tap_action:
+      action: toggle
+  - type: state-label
+    entity: timer.varmare
+    style:
+      color: '#8df427'
+      top: 95%
+      left: 6%
+      width: 8%
+  - type: icon
+    icon: mdi:fan-off
+    entity: switch.bilen_parking_heater_ventilation
+    state_image:
+      'On': mdi:fan
+      'Off': mdi:fan-off
+    style:
+      top: 87%
+      left: 17%
+      width: 8%
+      image-rendering: crisp
+image: /local/skoda-background.jpg
