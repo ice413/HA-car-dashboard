@@ -1,71 +1,220 @@
-type: picture-elements
-elements:
-  - type: state-label
-    entity: device_tracker.<YOUR_CAR_HERE>
-    prefix: 'Position: '
-    style:
-      color: '#8df427'
-      font-size: 18px
-      left: 94%
-      top: 10%
-      transform: translate(-100%,-50%)
-  - type: state-label
-    entity: sensor.bilen_odometer
-    style:
-      color: '#8df427'
-      font-size: 18px
-      left: 34%
-      top: 10%
-      transform: translate(-100%,-50%)
-  - type: state-label
-    entity: sensor.bilen_combustion_range
-    prefix: 'Räckvidd: '
-    style:
-      color: '#8df427'
-      font-size: 18px
-      left: 94%
-      top: 92%
-      transform: translate(-100%,-50%)
-  - type: image
-    entity: lock.bilen_door_locked
-    image: /local/door_locked.png
-    state_image:
-      locked: /local/door_locked.png
-      unlocked: /local/door_unlocked.png
-    style:
-      top: 10%
-      left: 6%
-      width: 8%
-      image-rendering: crisp
-  - type: image
-    entity: switch.bilen_parking_heater_heating
-    image: /local/heater_on.png
-    state_image:
-      'on': /local/heater_off.png
-      'off': /local/heater_on.png
-    style:
-      top: 87%
-      left: 6%
-      width: 8%
-      image-rendering: crisp
-    tap_action:
-      action: toggle
-  - type: state-label
-    entity: timer.varmare
-    style:
-      color: '#8df427'
-      top: 95%
-      left: 6%
-      width: 8%
-  - type: icon
-    icon: mdi:fan-off
-    entity: switch.bilen_parking_heater_ventilation
-    state_image:
-      'On': mdi:fan
-      'Off': mdi:fan-off
-    style:
-      top: 87%
-      left: 17%
-      width: 8%
-      image-rendering: crisp
-image: /local/skoda-background.jpg
+  - title: Bilen
+    path: bilen-2
+    icon: mdi:car
+    theme: ios-dark-mode-blue-red
+    badges: []
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Security
+            secondary: ''
+            icon: mdi:home
+            layout: vertical
+            icon_color: blue
+            tap_action:
+              action: navigate
+              navigation_path: security
+          - type: custom:mushroom-template-card
+            primary: Lights
+            secondary: ''
+            icon: mdi:lightbulb
+            icon_color: orange
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: lights
+          - type: custom:mushroom-template-card
+            primary: start
+            secondary: ''
+            icon: mdi:home-assistant
+            icon_color: green
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: start
+          - type: custom:mushroom-template-card
+            primary: Energy
+            secondary: ''
+            icon: mdi:flash
+            icon_color: purple
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: energy
+          - type: custom:mushroom-template-card
+            primary: Servers
+            secondary: ''
+            icon: mdi:server
+            icon_color: 39, 168, 245
+            layout: vertical
+            tap_action:
+              action: navigate
+              navigation_path: servers
+          - type: custom:mushroom-template-card
+            primary: Garden
+            secondary: ''
+            icon: mdi:shovel
+            layout: vertical
+            icon_color: 39, 245, 65
+            tap_action:
+              action: navigate
+              navigation_path: garden
+      - type: custom:mushroom-template-card
+        primary: Hello, {{user}}
+        secondary: >-
+          {% set bensinpris=<YOUR_PETROL_SENSOR_HERE>|float|
+          round(2) %}
+
+          {% set level = (100 -states('sensor.bilen_fuel_level')| float) / 100 
+          %}
+
+          {% set liter = (55 * level)| round(2) %}
+
+          {% set fulltank=55 * bensinpris %}
+
+          {% set needed = ((55 * level) * bensinpris)| round(2) %}
+
+
+          1 liter 95oktan kostar idag: {{bensinpris}}.-
+
+          Skall du fylla upp tanken ( {{ liter }} liter ) nu så kostar det dig:
+          {{needed}}.-
+
+
+          det är {{ (distance('device_tracker.<YOOUR_CAR_HERE>', 'device_tracker.claespixel')) | round(1) }} km mellan Claes och bilen
+        icon: mdi:gas-station
+        multiline_secondary: true
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            elements:
+              - type: state-label
+                entity: device_tracker.<YOOUR_CAR_HERE>
+                prefix: 'Position: '
+                style:
+                  color: '#8df427'
+                  font-size: 18px
+                  left: 94%
+                  top: 10%
+                  transform: translate(-100%,-50%)
+              - type: state-label
+                entity: sensor.bilen_odometer
+                style:
+                  color: '#8df427'
+                  font-size: 18px
+                  left: 34%
+                  top: 10%
+                  transform: translate(-100%,-50%)
+              - type: state-label
+                entity: sensor.bilen_combustion_range
+                prefix: 'Räckvidd: '
+                style:
+                  color: '#8df427'
+                  font-size: 18px
+                  left: 94%
+                  top: 92%
+                  transform: translate(-100%,-50%)
+              - type: image
+                entity: lock.bilen_door_locked
+                image: /local/door_locked.png
+                state_image:
+                  locked: /local/door_locked.png
+                  unlocked: /local/door_unlocked.png
+                style:
+                  top: 10%
+                  left: 6%
+                  width: 8%
+                  image-rendering: crisp
+              - type: image
+                entity: switch.bilen_parking_heater_heating
+                image: /local/heater_on.png
+                state_image:
+                  'on': /local/heater_off.png
+                  'off': /local/heater_on.png
+                style:
+                  top: 87%
+                  left: 6%
+                  width: 8%
+                  image-rendering: crisp
+                tap_action:
+                  action: toggle
+              - type: state-label
+                entity: timer.varmare
+                style:
+                  color: '#8df427'
+                  top: 95%
+                  left: 6%
+                  width: 8%
+              - type: icon
+                icon: mdi:fan-off
+                entity: switch.bilen_parking_heater_ventilation
+                state_image:
+                  'On': mdi:fan
+                  'Off': mdi:fan-off
+                style:
+                  top: 87%
+                  left: 17%
+                  width: 8%
+                  image-rendering: crisp
+            image: /local/skoda-background.jpg
+          - type: custom:mushroom-lock-card
+            entity: lock.bilen_trunk_locked
+            name: Bagage
+            layout: horizontal
+          - type: custom:mushroom-entity-card
+            entity: binary_sensor.bilen_windows_closed
+            layout: horizontal
+            name: Fönster
+          - type: custom:mushroom-entity-card
+            entity: sensor.bilen_fuel_level
+            layout: horizontal
+            name: Bensin kvar
+      - type: map
+        entities:
+          - entity: device_tracker.<YOU_CAR_HERE>
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            style: |
+              ha-card {
+                box-shadow: none;
+                height: 33px;
+                background: none;
+                padding: 0px 0px 10px 0px;
+                text-align: center;
+              }
+            content: '## Senaste resan'
+          - square: false
+            columns: 2
+            type: grid
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: sensor.bilen_last_trip_average_fuel_consumption
+                layout: vertical
+              - type: custom:mushroom-entity-card
+                entity: sensor.bilen_last_trip_average_speed
+                layout: vertical
+          - square: false
+            columns: 2
+            type: grid
+            cards:
+              - type: custom:mushroom-entity-card
+                entity: sensor.bilen_last_trip_duration
+                layout: vertical
+              - type: custom:mushroom-entity-card
+                entity: sensor.bilen_last_trip_length
+                layout: vertical
+      - square: false
+        columns: 3
+        type: grid
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: sensor.bilen_service_inspection_days
+            layout: vertical
+          - type: custom:mushroom-entity-card
+            entity: sensor.bilen_oil_inspection_days
+            layout: vertical
+          - type: custom:mushroom-entity-card
+            entity: sensor.bilen_service_inspection_distance
+            layout: vertical
